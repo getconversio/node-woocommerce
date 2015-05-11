@@ -1,0 +1,35 @@
+{
+  "name": "woocommerce",
+  "version": "0.1.0",
+  "description": "Connects NodeJS to the glorious world of the WooCommerce API",
+  "main": "lib/woocommerce.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Receiptful/node-woocommerce.git"
+  },
+  "keywords": [
+    "woocommerce",
+    "woo",
+    "woothemes",
+    "receiptful",
+    "api",
+    "wc"
+  ],
+  "author": "Rick Craig @ Receiptful <rick@receiptful.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Receiptful/node-woocommerce/issues"
+  },
+  "homepage": "https://github.com/Receiptful/node-woocommerce",
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "istanbul": "^0.3.13",
+    "mocha": "^2.2.4"
+  },
+  "dependencies": {
+    "oauth-1.0a": "^0.2.1"
+  }
+}
