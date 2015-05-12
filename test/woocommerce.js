@@ -146,9 +146,8 @@ describe('Logger: #WooCommerce', function() {
 
 describe('Request: #WooCommerce', function() {
 
-  afterEach(function(done){
+  beforeEach(function(){
     nock.cleanAll();
-    done();
   });
 
   var rOAuth = new Request({
