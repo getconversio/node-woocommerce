@@ -146,28 +146,8 @@ describe('Logger: #WooCommerce', function() {
 
 describe('Request: #WooCommerce', function() {
 
-  beforeEach(function(){
+  afterEach(function(){
     nock.cleanAll();
-  });
-
-  var rOAuth = new Request({
-    hostname: 'foo.com',
-    consumerKey: 'foo',
-    secret: 'foo',
-    headers: {
-      test: 'header'
-    }
-  });
-
-  var rBasic = new Request({
-    hostname: 'foo.com',
-    ssl: true,
-    port: 443,
-    consumerKey: 'foo',
-    secret: 'foo',
-    headers: {
-      test: 'header'
-    }
   });
 
   it('Should return an error if hostname is missing', function(){
@@ -182,6 +162,15 @@ describe('Request: #WooCommerce', function() {
       .post('/orders?xxx', {})
       .reply(400, {});
 
+    var rOAuth = new Request({
+      hostname: 'foo.com',
+      consumerKey: 'foo',
+      secret: 'foo',
+      headers: {
+        test: 'header'
+      }
+    });
+
     rOAuth.completeRequest('post', '/orders', {}, function(err, data, res){
       err.should.not.be.null;
       done();
@@ -193,6 +182,15 @@ describe('Request: #WooCommerce', function() {
       .filteringPath(/\?.*/g, '?xxx')
       .post('/orders?xxx', {})
       .reply(500, {});
+
+    var rOAuth = new Request({
+      hostname: 'foo.com',
+      consumerKey: 'foo',
+      secret: 'foo',
+      headers: {
+        test: 'header'
+      }
+    });
 
     rOAuth.completeRequest('post', '/orders', {}, function(err, data, res){
       err.should.not.be.null;
@@ -209,6 +207,15 @@ describe('Request: #WooCommerce', function() {
       .post('/orders?xxx', {})
       .reply(200, '<malformed>');
 
+    var rOAuth = new Request({
+      hostname: 'foo.com',
+      consumerKey: 'foo',
+      secret: 'foo',
+      headers: {
+        test: 'header'
+      }
+    });
+
     rOAuth.completeRequest('post', '/orders', {}, function(err, data, res){
       err.should.not.be.null;
       err.message.should.equal('Unexpected token <');
@@ -222,6 +229,15 @@ describe('Request: #WooCommerce', function() {
       .post('/orders?xxx', {})
       .reply(200, {});
 
+    var rOAuth = new Request({
+      hostname: 'foo.com',
+      consumerKey: 'foo',
+      secret: 'foo',
+      headers: {
+        test: 'header'
+      }
+    });
+
     rOAuth.completeRequest('post', '/orders', {}, function(err, data, res){
       should.not.exist(err);
       data.should.be.a.string;
@@ -233,6 +249,17 @@ describe('Request: #WooCommerce', function() {
     var api = nock('https://foo.com')
       .post('/orders', {})
       .reply(200, {});
+
+    var rBasic = new Request({
+      hostname: 'foo.com',
+      ssl: true,
+      port: 443,
+      consumerKey: 'foo',
+      secret: 'foo',
+      headers: {
+        test: 'header'
+      }
+    });
 
     rBasic.completeRequest('post', '/orders', {}, function(err, data, res){
       should.not.exist(err);
@@ -249,6 +276,17 @@ describe('Request: #WooCommerce', function() {
       .post('/orders', {})
       .reply(200, 'plain');
 
+    var rBasic = new Request({
+      hostname: 'foo.com',
+      ssl: true,
+      port: 443,
+      consumerKey: 'foo',
+      secret: 'foo',
+      headers: {
+        test: 'header'
+      }
+    });
+
     rBasic.completeRequest('post', '/orders', {}, function(err, data, res){
       should.not.exist(err);
       data.should.equal('plain');
@@ -260,6 +298,17 @@ describe('Request: #WooCommerce', function() {
     var api = nock('https://foo.com')
       .post('/orders', {})
       .reply(200, {errors: ['An error has occurred.']});
+
+    var rBasic = new Request({
+      hostname: 'foo.com',
+      ssl: true,
+      port: 443,
+      consumerKey: 'foo',
+      secret: 'foo',
+      headers: {
+        test: 'header'
+      }
+    });
 
     rBasic.completeRequest('post', '/orders', {}, function(err, data, res){
       err.should.not.be.null;
