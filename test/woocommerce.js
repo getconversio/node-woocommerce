@@ -253,7 +253,7 @@ describe('Request: #WooCommerce', function() {
     var rBasic = new Request({
       hostname: 'foo5.com',
       ssl: true,
-      port: 443,
+      port: 80,
       consumerKey: 'foo',
       secret: 'foo',
       headers: {
@@ -279,7 +279,7 @@ describe('Request: #WooCommerce', function() {
     var rBasic = new Request({
       hostname: 'foo6.com',
       ssl: true,
-      port: 443,
+      port: 80,
       consumerKey: 'foo',
       secret: 'foo',
       headers: {
@@ -302,7 +302,7 @@ describe('Request: #WooCommerce', function() {
     var rBasic = new Request({
       hostname: 'foo7.com',
       ssl: true,
-      port: 443,
+      port: 80,
       consumerKey: 'foo',
       secret: 'foo',
       headers: {
