@@ -157,13 +157,13 @@ describe('Request: #WooCommerce', function() {
   });
 
   it('Should return an error on bad request', function(done) {
-    var api = nock('http://foo.com')
+    var api = nock('http://foo1.com')
       .filteringPath(/\?.*/g, '?xxx')
       .post('/orders?xxx', {})
       .reply(400, {});
 
     var rOAuth = new Request({
-      hostname: 'foo.com',
+      hostname: 'foo1.com',
       consumerKey: 'foo',
       secret: 'foo',
       headers: {
@@ -178,13 +178,13 @@ describe('Request: #WooCommerce', function() {
   });
 
   it('Should return an error on internal server error', function(done) {
-    var api = nock('http://foo.com')
+    var api = nock('http://foo2.com')
       .filteringPath(/\?.*/g, '?xxx')
       .post('/orders?xxx', {})
       .reply(500, {});
 
     var rOAuth = new Request({
-      hostname: 'foo.com',
+      hostname: 'foo2.com',
       consumerKey: 'foo',
       secret: 'foo',
       headers: {
@@ -199,7 +199,7 @@ describe('Request: #WooCommerce', function() {
   });
 
   it('Should return an error the request JSON is malformed', function(done){
-    var api = nock('http://foo.com')
+    var api = nock('http://foo3.com')
       .defaultReplyHeaders({
         'content-type': 'application/json'
       })
@@ -208,7 +208,7 @@ describe('Request: #WooCommerce', function() {
       .reply(200, '<malformed>');
 
     var rOAuth = new Request({
-      hostname: 'foo.com',
+      hostname: 'foo3.com',
       consumerKey: 'foo',
       secret: 'foo',
       headers: {
@@ -224,13 +224,13 @@ describe('Request: #WooCommerce', function() {
   });
 
   it('Should return content for http using OAuth', function(done) {
-    var api = nock('http://foo.com')
+    var api = nock('http://foo4.com')
       .filteringPath(/\?.*/g, '?xxx')
       .post('/orders?xxx', {})
       .reply(200, {});
 
     var rOAuth = new Request({
-      hostname: 'foo.com',
+      hostname: 'foo4.com',
       consumerKey: 'foo',
       secret: 'foo',
       headers: {
@@ -246,12 +246,12 @@ describe('Request: #WooCommerce', function() {
   });
 
   it('Should return content for https using Basic Auth', function(done) {
-    var api = nock('https://foo.com')
+    var api = nock('https://foo5.com')
       .post('/orders', {})
       .reply(200, {});
 
     var rBasic = new Request({
-      hostname: 'foo.com',
+      hostname: 'foo5.com',
       ssl: true,
       port: 443,
       consumerKey: 'foo',
@@ -269,7 +269,7 @@ describe('Request: #WooCommerce', function() {
   });
 
   it('Should return content for when not a json', function(done) {
-    var api = nock('https://foo.com')
+    var api = nock('https://foo6.com')
       .defaultReplyHeaders({
         'content-type': 'text/plain'
       })
@@ -277,7 +277,7 @@ describe('Request: #WooCommerce', function() {
       .reply(200, 'plain');
 
     var rBasic = new Request({
-      hostname: 'foo.com',
+      hostname: 'foo6.com',
       ssl: true,
       port: 443,
       consumerKey: 'foo',
@@ -295,12 +295,12 @@ describe('Request: #WooCommerce', function() {
   });
 
   it('Should return an error if "errors" are found in the response JSON', function(done){
-    var api = nock('https://foo.com')
+    var api = nock('https://foo7.com')
       .post('/orders', {})
       .reply(200, {errors: ['An error has occurred.']});
 
     var rBasic = new Request({
-      hostname: 'foo.com',
+      hostname: 'foo7.com',
       ssl: true,
       port: 443,
       consumerKey: 'foo',
