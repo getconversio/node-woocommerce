@@ -180,7 +180,7 @@ describe('Request: #WooCommerce', function() {
     var api = nock('http://foo.com')
       .filteringPath(/\?.*/g, '?xxx')
       .post('/orders?xxx', {})
-      .reply(400, {});
+      .reply(400, { success: true });
 
     rOAuth.completeRequest('post', '/orders', {}, function(err, data, res){
       err.should.not.be.null;
@@ -192,7 +192,7 @@ describe('Request: #WooCommerce', function() {
     var api = nock('http://foo.com')
       .filteringPath(/\?.*/g, '?xxx')
       .post('/orders?xxx', {})
-      .reply(500, {});
+      .reply(500, { success: true });
 
     rOAuth.completeRequest('post', '/orders', {}, function(err, data, res){
       err.should.not.be.null;
@@ -220,7 +220,7 @@ describe('Request: #WooCommerce', function() {
     var api = nock('http://foo.com')
       .filteringPath(/\?.*/g, '?xxx')
       .post('/orders?xxx', {})
-      .reply(200, {});
+      .reply(200, { success: true });
 
     rOAuth.completeRequest('post', '/orders', {}, function(err, data, res){
       should.not.exist(err);
@@ -232,7 +232,7 @@ describe('Request: #WooCommerce', function() {
   it('Should return content for https using Basic Auth', function(done) {
     var api = nock('https://foo.com')
       .post('/orders', {})
-      .reply(200, {});
+      .reply(200, { success: true });
 
     rBasic.completeRequest('post', '/orders', {}, function(err, data, res){
       should.not.exist(err);
@@ -261,7 +261,7 @@ describe('Request: #WooCommerce', function() {
   it('Should return an error if "errors" are found in the response JSON', function(done){
     var api = nock('https://foo.com')
       .get('/errors')
-      .reply(200, {errors: ['An error has occurred.']});
+      .reply(200, { errors: ['An error has occurred.'] });
 
     rBasic.completeRequest('get', '/errors', {}, function(err, data, res){
       api.done();
