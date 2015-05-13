@@ -246,10 +246,10 @@ describe('Request: #WooCommerce', function() {
       .defaultReplyHeaders({
         'content-type': 'text/plain'
       })
-      .post('/orders', {})
+      .get('/orders')
       .reply(200, 'plain');
 
-    rBasic.completeRequest('post', '/orders', {}, function(err, data, res){
+    rBasic.completeRequest('get', '/orders', {}, function(err, data, res){
       should.not.exist(err);
       data.should.equal('plain');
       done();
@@ -258,10 +258,10 @@ describe('Request: #WooCommerce', function() {
 
   it('Should return an error if "errors" are found in the response JSON', function(done){
     var api = nock('https://foo.com')
-      .post('/orders', {})
+      .get('/orders')
       .reply(200, {errors: ['An error has occurred.']});
 
-    rBasic.completeRequest('post', '/orders', {}, function(err, data, res){
+    rBasic.completeRequest('get', '/orders', {}, function(err, data, res){
       err.should.not.be.null;
       err.message.should.equal('["An error has occurred."]');
       done();
