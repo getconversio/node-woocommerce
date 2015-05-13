@@ -253,7 +253,7 @@ describe('Request: #WooCommerce', function() {
     var rBasic = new Request({
       hostname: 'foo5.com',
       ssl: true,
-      port: 80,
+      port: 443,
       consumerKey: 'foo',
       secret: 'foo',
       headers: {
@@ -294,7 +294,7 @@ describe('Request: #WooCommerce', function() {
   });
 
   it('Should return an error if "errors" are found in the response JSON', function(done){
-    var api = nock('https://foo7.com')
+    var api = nock('http://foo7.com')
       .filteringPath(/\?.*/g, '?xxx')
       .post('/orders?xxx', {})
       .reply(200, {errors: ['An error has occurred.']});
