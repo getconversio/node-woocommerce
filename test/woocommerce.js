@@ -269,17 +269,16 @@ describe('Request: #WooCommerce', function() {
   });
 
   it('Should return content for when not a json', function(done) {
-    var api = nock('https://foo6.com')
+    var api = nock('http://foo6.com')
       .defaultReplyHeaders({
         'content-type': 'text/plain'
       })
-      .post('/orders', {})
+      .filteringPath(/\?.*/g, '?xxx')
+      .post('/orders?xxx', {})
       .reply(200, 'plain');
 
-    var rBasic = new Request({
-      hostname: 'foo6.com',
-      ssl: true,
-      port: 80,
+    var rOAuth = new Request({
+      hostname: 'foo4.com',
       consumerKey: 'foo',
       secret: 'foo',
       headers: {
@@ -287,7 +286,7 @@ describe('Request: #WooCommerce', function() {
       }
     });
 
-    rBasic.completeRequest('post', '/orders', {}, function(err, data, res){
+    rOAuth.completeRequest('post', '/orders', {}, function(err, data, res){
       should.not.exist(err);
       data.should.equal('plain');
       done();
@@ -296,13 +295,12 @@ describe('Request: #WooCommerce', function() {
 
   it('Should return an error if "errors" are found in the response JSON', function(done){
     var api = nock('https://foo7.com')
-      .post('/orders', {})
+      .filteringPath(/\?.*/g, '?xxx')
+      .post('/orders?xxx', {})
       .reply(200, {errors: ['An error has occurred.']});
 
-    var rBasic = new Request({
-      hostname: 'foo7.com',
-      ssl: true,
-      port: 80,
+    var rOAuth = new Request({
+      hostname: 'foo4.com',
       consumerKey: 'foo',
       secret: 'foo',
       headers: {
@@ -310,7 +308,7 @@ describe('Request: #WooCommerce', function() {
       }
     });
 
-    rBasic.completeRequest('post', '/orders', {}, function(err, data, res){
+    rOAuth.completeRequest('post', '/orders', {}, function(err, data, res){
       err.should.not.be.null;
       err.message.should.equal('["An error has occurred."]');
       done();
