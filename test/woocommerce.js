@@ -250,6 +250,7 @@ describe('Request: #WooCommerce', function() {
       .reply(200, 'plain');
 
     rBasic.completeRequest('get', '/plain', {}, function(err, data, res){
+      console.log(err, data, res);
       should.not.exist(err);
       data.should.equal('plain');
       done();
