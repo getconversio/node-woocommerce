@@ -251,6 +251,7 @@ describe('Request: #WooCommerce', function() {
       .reply(200, '<xml></xml>');
 
     rOAuth.completeRequest('post', '/orders', {}, function(err, data, res){
+      api.done();
       should.not.exist(err);
       data.should.be.a.string;
       done();
@@ -263,6 +264,7 @@ describe('Request: #WooCommerce', function() {
       .reply(200, {errors: ['An error has occurred.']});
 
     rBasic.completeRequest('get', '/errors', {}, function(err, data, res){
+      api.done();
       err.should.not.be.null;
       err.message.should.equal('["An error has occurred."]');
       done();
