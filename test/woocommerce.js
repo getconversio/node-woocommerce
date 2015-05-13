@@ -242,17 +242,17 @@ describe('Request: #WooCommerce', function() {
   });
 
   it('Should return content for when not a json', function(done) {
-    var api = nock('https://foo.com')
+    var api = nock('http://foo.com')
       .defaultReplyHeaders({
-        'content-type': 'text/plain'
+        'content-type': 'application/xml'
       })
-      .get('/plain')
-      .reply(200, 'plain');
+      .filteringPath(/\?.*/g, '?xxx')
+      .post('/orders?xxx', {})
+      .reply(200, '<xml></xml>');
 
-    rBasic.completeRequest('get', '/plain', {}, function(err, data, res){
-      console.log(err, data, res);
+    rOAuth.completeRequest('post', '/orders', {}, function(err, data, res){
       should.not.exist(err);
-      data.should.equal('plain');
+      data.should.be.a.string;
       done();
     });
   });
