@@ -1,7 +1,31 @@
 # node-woocommerce
 Connects NodeJS to the glorious world of the WooCommerce API
 
-[![Code Climate](https://codeclimate.com/repos/5551dd2f6956804225000037/badges/4935563d1fc24b707863/gpa.svg)](https://codeclimate.com/repos/5551dd2f6956804225000037/feed) [![Test Coverage](https://codeclimate.com/repos/5551dd2f6956804225000037/badges/4935563d1fc24b707863/coverage.svg)](https://codeclimate.com/repos/5551dd2f6956804225000037/coverage)
+[![Code Climate](https://codeclimate.com/repos/5551dd2f6956804225000037/badges/4935563d1fc24b707863/gpa.svg)](https://codeclimate.com/repos/5551dd2f6956804225000037/feed)
+
+## Important v2.0 Changes
+
+To keep this plugin as up to date as possible v2 requires node v4+. To take advantage of the new features of node the module now utilises ES6 code.
+
+To allow for some automation surrounding the authentication it is now required to pass the url's protocol (http/https). This allows the module to automatically choose from basic auth or OAuth when sending requests. This can be forced by using the `ssl` option.
+
+Use of promises are now available, legacy support for callbacks is still included. To use `node-woocommerce` with promises you can do the following:
+```javascript
+wooCommerce.get('/products')
+  .then(data => {
+    // data will contain the body content from the request
+  })
+  .catch(err => {
+    // Log the error message
+    console.log(err.message);
+    
+    // Log the body returned from the server
+    console.log(err.body);
+    
+    // Log the full response object and status code
+    console.log(err.response, err.response.statusCode);
+  });
+```
 
 ## Installation
 
@@ -21,8 +45,7 @@ Include the 'woocommerce' module within your script and instantiate it with a co
 var WooCommerce = require('woocommerce');
 
 var wooCommerce = new WooCommerce({
-  url: 'mystore.com',
-  port: 443,
+  url: 'http://mystore.com',
   ssl: true,
   consumerKey: 'ck_123456789abcd',
   secret: 'cs_abcdefg12345'
@@ -37,11 +60,10 @@ When instantiating the WooCommerce object you have a choice of the following con
 
 | option      | type    | required | description                                                                                                                         |
 |-------------|---------|----------|-------------------------------------------------------------------------------------------------------------------------------------|
-| url         | string  | yes      | The url of your store without the protocol. e.g. mystore.com                                                                        |
+| url         | string  | yes      | The url of your store including the protocol: http://mystore.com, https://securestore.com                                                                       |
 | consumerKey | string  | yes      | The consumer key generated in the store admin                                                                                       |
 | secret      | string  | yes      | The consumer secret generated in the store admin                                                                                    |
-| ssl         | boolean | no       | (default: false) If your API is on HTTPS set ssl to true. HTTP: false                                                               |
-| port        | number  | no       | (default: 80) Set the port to use for all calls, HTTPS: 443 normally, so if you have ssl:true you should change this option to 443. |
+| ssl         | boolean | no       | (default: based on protocol, https = true, http = false) this is automatically set by default, but can be forced by setting the ssl option                                                               |
 | logLevel    | number  | no       | (default: 0) 0 shows errors only, 1 shows info and errors for debugging                                                             |
 | apiPath     | string  | no       | (default: '/wc-api/v2') The path to your API, it should contain a leading slash and no trailing slash                               |
 
