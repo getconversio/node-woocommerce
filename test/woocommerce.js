@@ -1,3 +1,5 @@
+'use strict';
+
 var WooCommerce = require('../lib/woocommerce'),
   logger = require('../lib/logger'),
   Request = require('../lib/request'),
@@ -6,17 +8,16 @@ var WooCommerce = require('../lib/woocommerce'),
   sinon = require('sinon');
 
 
-describe('Constructor: #WooCommerce', function() {
+describe('Constructor: #WooCommerce', () => {
 
-  it('Should throw an error if the ' +
-    'consumerKey or secret are missing', function() {
-      should.Throw(function() {
+  it('Should throw an error if the consumerKey or secret are missing', () => {
+      should.Throw(() => {
         new WooCommerce();
       }, Error);
     });
 
-  it('Should throw an error if the url is missing', function() {
-    should.Throw(function() {
+  it('Should throw an error if the url is missing', () => {
+    should.Throw(() => {
       new WooCommerce({
         consumerKey: 'foo',
         secret: 'foo'
@@ -24,7 +25,7 @@ describe('Constructor: #WooCommerce', function() {
     }, Error);
   });
 
-  it('Should set the correct default when requirements are met', function() {
+  it('Should set the correct default when requirements are met', () => {
     var wc = new WooCommerce({
       url: 'foo.com',
       consumerKey: 'foo',
@@ -33,13 +34,32 @@ describe('Constructor: #WooCommerce', function() {
 
     wc.options.logLevel.should.equal(0);
     wc.options.ssl.should.be.false;
-    wc.options.port.should.equal(80);
     wc.options.apiPath.should.equal('/wc-api/v2');
+  });
+
+  it('Should set the correct ssl default for https', () => {
+    var wc = new WooCommerce({
+      url: 'https://foo.com',
+      consumerKey: 'foo',
+      secret: 'foo'
+    });
+
+    wc.options.ssl.should.be.true;
+  });
+
+  it('Should set the correct ssl default for http', () => {
+    var wc = new WooCommerce({
+      url: 'http://foo.com',
+      consumerKey: 'foo',
+      secret: 'foo'
+    });
+
+    wc.options.ssl.should.be.false;
   });
 
 });
 
-describe('Helper Methods: #WooCommerce', function() {
+describe('Helper Methods: #WooCommerce', () => {
 
   var wc = new WooCommerce({
     url: 'foo.com',
@@ -47,15 +67,15 @@ describe('Helper Methods: #WooCommerce', function() {
     secret: 'foo'
   });
 
-  describe('Get', function() {
-    it('Should call the request', function(done) {
+  describe('Get', () => {
+    it('Should call the request', done => {
       var requestMock = sinon.mock(Request.prototype);
       var expectation = requestMock
-        .expects('completeRequest')
+        .expects('complete')
         .once()
         .yields();
 
-      wc.get('/foo', function() {
+      wc.get('/foo', () => {
         expectation.verify();
         requestMock.restore();
         done();
@@ -63,15 +83,15 @@ describe('Helper Methods: #WooCommerce', function() {
     });
   });
 
-  describe('Post', function(done) {
-    it('Should call the request', function(done) {
+  describe('Post', () => {
+    it('Should call the request', done => {
       var requestMock = sinon.mock(Request.prototype);
       var expectation = requestMock
-        .expects('completeRequest')
+        .expects('complete')
         .once()
         .yields();
 
-      wc.post('/foo', {}, function() {
+      wc.post('/foo', {}, () => {
         expectation.verify();
         requestMock.restore();
         done();
@@ -79,15 +99,15 @@ describe('Helper Methods: #WooCommerce', function() {
     });
   });
 
-  describe('Put', function(done) {
-    it('Should call the request', function(done) {
+  describe('Put', () => {
+    it('Should call the request', done => {
       var requestMock = sinon.mock(Request.prototype);
       var expectation = requestMock
-        .expects('completeRequest')
+        .expects('complete')
         .once()
         .yields();
 
-      wc.put('/foo', {}, function() {
+      wc.put('/foo', {}, () => {
         expectation.verify();
         requestMock.restore();
         done();
@@ -95,15 +115,15 @@ describe('Helper Methods: #WooCommerce', function() {
     });
   });
 
-  describe('Delete', function(done) {
-    it('Should call the request', function(done) {
+  describe('Delete', () => {
+    it('Should call the request', done => {
       var requestMock = sinon.mock(Request.prototype);
       var expectation = requestMock
-        .expects('completeRequest')
+        .expects('complete')
         .once()
         .yields();
 
-      wc.delete('/foo', function() {
+      wc.delete('/foo', () => {
         expectation.verify();
         requestMock.restore();
         done();
@@ -113,12 +133,12 @@ describe('Helper Methods: #WooCommerce', function() {
 
 });
 
-describe('Logger: #WooCommerce', function() {
-  it('Should be set to a log level of zero by default', function(){
-    logger.level.should.equal(0);
+describe('Logger: #WooCommerce', () => {
+  it('Should be set to a log level of zero by default', () => {
+    logger.logLevel.should.equal(0);
   });
 
-  it('Should log an error at any log level', function(){
+  it('Should log an error at any log level', () => {
     var spy = sinon.spy(console, 'log');
     logger.error('Logging test error at 0');
     logger.level = 1;
@@ -127,31 +147,31 @@ describe('Logger: #WooCommerce', function() {
     spy.restore();
   });
 
-  it('Should log info at level one', function(){
+  it('Should log info at level one', () => {
     var spy = sinon.spy(console, 'log');
-    logger.level = 1;
+    logger.logLevel = 1;
     logger.info('Logging test error at 1');
     spy.calledOnce.should.be.true;
     spy.restore();
   });
 
-  it('Should not log info at level zero', function(){
-    var spy = sinon.spy(console, 'log');
-    logger.level = 0;
+  it('Should not log info at level zero', () => {
+    const spy = sinon.spy(console, 'log');
+    logger.logLevel = 0;
     logger.info('Logging test error at 1');
     spy.callCount.should.equal(0);
     spy.restore();
   });
 });
 
-describe('Request: #WooCommerce', function() {
+describe('Request: #WooCommerce', () => {
 
-  beforeEach(function(){
+  beforeEach(() => {
     nock.cleanAll();
   });
 
-  var rOAuth = new Request({
-    hostname: 'foo.com',
+  const rOAuth = new Request({
+    hostname: 'http://foo.com',
     consumerKey: 'foo',
     secret: 'foo',
     headers: {
@@ -159,8 +179,8 @@ describe('Request: #WooCommerce', function() {
     }
   });
 
-  var rBasic = new Request({
-    hostname: 'foo.com',
+  const rBasic = new Request({
+    hostname: 'https://foo.com',
     ssl: true,
     port: 443,
     consumerKey: 'foo',
@@ -170,38 +190,40 @@ describe('Request: #WooCommerce', function() {
     }
   });
 
-  it('Should return an error if hostname is missing', function(){
-    should.Throw(function(){
+  it('Should return an error if hostname is missing', () => {
+    should.Throw(() => {
       new Request();
     }, Error);
   });
 
-  it('Should return an error on bad request', function(done) {
-    var api = nock('http://foo.com')
+  it('Should return an error on bad request', done => {
+    const api = nock('http://foo.com')
       .filteringPath(/\?.*/g, '?xxx')
       .post('/orders?xxx', {})
       .reply(400, { success: true });
 
-    rOAuth.completeRequest('post', '/orders', {}, function(err, data, res){
+    rOAuth.complete('post', '/orders', {}, err => {
       err.should.not.be.null;
+      api.done();
       done();
     });
   });
 
-  it('Should return an error on internal server error', function(done) {
-    var api = nock('http://foo.com')
+  it('Should return an error on internal server error', done => {
+    const api = nock('http://foo.com')
       .filteringPath(/\?.*/g, '?xxx')
       .post('/orders?xxx', {})
       .reply(500, { success: true });
 
-    rOAuth.completeRequest('post', '/orders', {}, function(err, data, res){
+    rOAuth.complete('post', '/orders', {}, err => {
       err.should.not.be.null;
+      api.done();
       done();
     });
   });
 
-  it('Should return an error the request JSON is malformed', function(done){
-    var api = nock('http://foo.com')
+  it('Should return an error the request JSON is malformed', done => {
+    const api = nock('http://foo.com')
       .defaultReplyHeaders({
         'content-type': 'application/json'
       })
@@ -209,40 +231,44 @@ describe('Request: #WooCommerce', function() {
       .post('/orders?xxx', {})
       .reply(200, '<malformed>');
 
-    rOAuth.completeRequest('post', '/orders', {}, function(err, data, res){
+    rOAuth.complete('post', '/orders', {}, err => {
       err.should.not.be.null;
       err.message.should.equal('Unexpected token <');
+      api.done();
       done();
     });
   });
 
-  it('Should return content for http using OAuth', function(done) {
-    var api = nock('http://foo.com')
+  it('Should return content for http using OAuth', done => {
+    const api = nock('http://foo.com')
       .filteringPath(/\?.*/g, '?xxx')
       .post('/orders?xxx', {})
-      .reply(200, { success: true });
+      .reply(200, '{ "success": true }');
 
-    rOAuth.completeRequest('post', '/orders', {}, function(err, data, res){
+    rOAuth.complete('post', '/orders', {}, (err, data) => {
       should.not.exist(err);
       data.should.be.a.string;
+      api.done();
       done();
     });
   });
 
-  it('Should return content for https using Basic Auth', function(done) {
-    var api = nock('https://foo.com')
-      .post('/orders', {})
-      .reply(200, { success: true });
+  it('Should return content for https using Basic Auth', done => {
+    const api = nock('https://foo.com/')
+      .filteringPath(/\?.*/g, '?xxx')
+      .post('/orders?xxx', {})
+      .reply(200, '{ "success": true }');
 
-    rBasic.completeRequest('post', '/orders', {}, function(err, data, res){
+    rBasic.complete('post', '/orders', {}, (err, data) => {
       should.not.exist(err);
       data.should.be.a.string;
+      api.done();
       done();
     });
   });
 
-  it('Should return content for when not a json', function(done) {
-    var api = nock('http://foo.com')
+  it('Should return content for when not a json', done => {
+    const api = nock('http://foo.com')
       .defaultReplyHeaders({
         'content-type': 'application/xml'
       })
@@ -250,20 +276,24 @@ describe('Request: #WooCommerce', function() {
       .post('/orders?xxx', {})
       .reply(200, '<xml></xml>');
 
-    rOAuth.completeRequest('post', '/orders', {}, function(err, data, res){
+    rOAuth.complete('post', '/orders', {}, (err, data) => {
       api.done();
       should.not.exist(err);
       data.should.be.a.string;
+      api.done();
       done();
     });
   });
 
-  it('Should return an error if "errors" are found in the response JSON', function(done){
-    var api = nock('https://foo.com')
-      .get('/errors')
-      .reply(200, { errors: ['An error has occurred.'] });
+  it('Should return an error if "errors" are found in the response JSON', done => {
+    const api = nock('https://foo.com')
+      .filteringPath(/\?.*/g, '?xxx')
+      .get('/errors?xxx')
+      .reply(200, '{ "errors": ["An error has occurred."] }', {
+        'content-type': 'application/json'
+      });
 
-    rBasic.completeRequest('get', '/errors', {}, function(err, data, res){
+    rBasic.complete('get', '/errors', {}, err => {
       api.done();
       err.should.not.be.null;
       err.message.should.equal('["An error has occurred."]');
