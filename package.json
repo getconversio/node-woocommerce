@@ -1,6 +1,6 @@
 {
   "name": "woocommerce",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "Connects NodeJS to the glorious world of the WooCommerce API",
   "main": "lib/woocommerce.js",
   "scripts": {
@@ -32,6 +32,7 @@
     "sinon": "^1.14.1"
   },
   "dependencies": {
-    "oauth-1.0a": "^0.2.1"
+    "oauth-1.0a": "^1.0.1",
+    "request": "^2.67.0"
   }
 }
