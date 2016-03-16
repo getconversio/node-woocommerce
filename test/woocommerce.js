@@ -253,10 +253,30 @@ describe('Request: #WooCommerce', () => {
     });
   });
 
+  it('Should support data for GET requests', done => {
+    const api = nock('https://foo.com/')
+      .get('/orders')
+      .query({
+        consumer_key: 'foo',
+        consumer_secret: 'foo',
+        filter: {
+          limit: 10
+        }
+      })
+      .reply(200, '{ "success": true }');
+
+    rBasic.complete('get', '/orders', { 'filter[limit]': 10 }, (err, data) => {
+      should.not.exist(err);
+      data.should.be.a.string;
+      api.done();
+      done();
+    });
+  });
+
   it('Should return content for https using Basic Auth', done => {
     const api = nock('https://foo.com/')
-      .filteringPath(/\?.*/g, '?xxx')
-      .post('/orders?xxx', {})
+      .post('/orders')
+      .query(true)
       .reply(200, '{ "success": true }');
 
     rBasic.complete('post', '/orders', {}, (err, data) => {

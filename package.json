@@ -25,14 +25,14 @@
   },
   "homepage": "https://github.com/Receiptful/node-woocommerce",
   "devDependencies": {
-    "chai": "^2.3.0",
-    "istanbul": "^0.3.13",
-    "mocha": "^2.2.4",
-    "nock": "^0.57.0",
-    "sinon": "^1.14.1"
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5",
+    "nock": "^7.2.2",
+    "sinon": "^1.17.3"
   },
   "dependencies": {
     "oauth-1.0a": "^1.0.1",
-    "request": "^2.67.0"
+    "request": "^2.69.0"
   }
 }
