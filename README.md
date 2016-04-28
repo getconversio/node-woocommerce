@@ -1,7 +1,7 @@
 # node-woocommerce
 Connects NodeJS to the glorious world of the WooCommerce API
 
-[![Code Climate](https://codeclimate.com/repos/5551dd2f6956804225000037/badges/4935563d1fc24b707863/gpa.svg)](https://codeclimate.com/repos/5551dd2f6956804225000037/feed)
+[![Build Status](https://travis-ci.org/Receiptful/node-woocommerce.svg?branch=master)](https://travis-ci.org/Receiptful/node-woocommerce)
 
 ## Important v2.0 Changes
 
@@ -18,10 +18,10 @@ wooCommerce.get('/products')
   .catch(err => {
     // Log the error message
     console.log(err.message);
-    
+
     // Log the body returned from the server
     console.log(err.body);
-    
+
     // Log the full response object and status code
     console.log(err.response, err.response.statusCode);
   });
