@@ -68,6 +68,7 @@
     "alert": false,
     "alertify": false,
     "printStackTrace": false,
-    "Spinner": false
+    "Spinner": false,
+    "Headers": false
   }
 }
