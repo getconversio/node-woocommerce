@@ -1,6 +1,6 @@
 {
   "name": "woocommerce",
-  "version": "2.1.1",
+  "version": "2.2.1",
   "description": "Connects NodeJS to the glorious world of the WooCommerce API",
   "main": "lib/woocommerce.js",
   "scripts": {
