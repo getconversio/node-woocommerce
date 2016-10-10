@@ -30,7 +30,7 @@ describe('Request', () => {
   });
 
   it('Should return an error if hostname is missing', () => {
-    should.Throw(() => {
+    should.throw(() => {
       new Request();
     }, Error);
   });
