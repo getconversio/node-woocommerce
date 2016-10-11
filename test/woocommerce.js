@@ -15,13 +15,13 @@ describe('WooCommerce', () => {
 
   describe('Constructor: #WooCommerce', () => {
     it('Should throw an error if the consumerKey or secret are missing', () => {
-      should.Throw(() => {
+      should.throw(() => {
         new WooCommerce();
       }, Error);
     });
 
     it('Should throw an error if the url is missing', () => {
-      should.Throw(() => {
+      should.throw(() => {
         new WooCommerce({
           consumerKey: 'foo',
           secret: 'foo'

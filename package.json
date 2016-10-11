@@ -5,9 +5,7 @@
   "main": "lib/woocommerce.js",
   "scripts": {
     "exectests": "node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha",
-    "jshint": "node_modules/.bin/jshint lib test",
-    "jscs": "node_modules/.bin/jscs lib test",
-    "lint": "npm run jshint && npm run jscs",
+    "lint": "node_modules/.bin/eslint lib test --quiet",
     "test": "npm run exectests && npm run lint"
   },
   "repository": {
@@ -30,9 +28,10 @@
   "homepage": "https://github.com/Receiptful/node-woocommerce",
   "devDependencies": {
     "chai": "^3.5.0",
+    "eslint": "^3.7.1",
+    "eslint-config-airbnb-base": "^8.0.0",
+    "eslint-plugin-import": "^1.16.0",
     "istanbul": "^0.4.2",
-    "jscs": "^2.9.0",
-    "jshint": "^2.9.1",
     "mocha": "^2.4.5",
     "nock": "^7.2.2",
     "sinon": "^1.17.3"
