@@ -37,7 +37,7 @@
     "sinon": "^1.17.3"
   },
   "dependencies": {
-    "oauth-1.0a": "^1.0.1",
+    "oauth-1.0a": "^2.0.0",
     "request": "^2.69.0"
   }
 }

@@ -39,6 +39,7 @@ describe('WooCommerce', () => {
       wc.options.logLevel.should.equal(0);
       wc.options.ssl.should.equal(false);
       wc.options.apiPath.should.equal('/wc-api/v2');
+      wc.options.legacy.should.equal(true);
     });
 
     it('Should set the correct ssl default for https', () => {
@@ -59,6 +60,17 @@ describe('WooCommerce', () => {
       });
 
       wc.options.ssl.should.equal(false);
+    });
+
+    it('should set legacy to false for new api', () => {
+      const wc = new WooCommerce({
+        url: 'http://foo.com',
+        consumerKey: 'foo',
+        secret: 'foo',
+        apiPath: '/wp-json/wc/v1'
+      });
+
+      wc.options.legacy.should.equal(false);
     });
   });
 
