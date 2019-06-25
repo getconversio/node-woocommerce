@@ -28,7 +28,7 @@
   "homepage": "https://github.com/Receiptful/node-woocommerce",
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint": "^3.7.1",
+    "eslint": "^5",
     "eslint-config-airbnb-base": "^8.0.0",
     "eslint-plugin-import": "^1.16.0",
     "istanbul": "^0.4.2",
