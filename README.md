@@ -1,3 +1,6 @@
+# DEPRECATION NOTICE
+This packages has been deprecated in favour of the official https://github.com/woocommerce/wc-api-node. Please update your dependencies.
+
 # node-woocommerce
 Connects NodeJS to the glorious world of the WooCommerce API
 
